@@ -1,0 +1,10 @@
+# saídas das rodadas do JMeter
+resultados/
+smoke/
+smoke2/
+.ultimo
+.ultimo-degraus
+*.jtl
+*.log
+__pycache__/
+.DS_Store
