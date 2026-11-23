@@ -4,6 +4,9 @@ smoke/
 smoke2/
 .ultimo
 .ultimo-degraus
+.ultimo-cenario
+# credenciais (modelo em .env.exemplo)
+.env
 *.jtl
 *.log
 __pycache__/

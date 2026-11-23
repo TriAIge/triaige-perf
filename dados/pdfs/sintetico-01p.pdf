@@ -1,0 +1,52 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Length 959 >>
+stream
+BT /F1 10 Tf 13 TL 40 800 Td
+(DOCUMENTO SINTETICO PARA TESTE DE CARGA - SEM DADOS PESSOAIS REAIS) '
+() '
+(RECIBO DE PAGAMENTO DE SALARIO - JANEIRO/2026) '
+(Empregador: Empresa Ficticia de Testes Ltda   CNPJ: 00.000.000/0000-00) '
+(Empregado: Fulano Sintetico da Silva   CPF: 000.000.000-00) '
+(Cargo: Auxiliar Administrativo   Admissao: 01/03/2022) '
+() '
+(Cod  Descricao                         Ref.        Vencimentos   Descontos) '
+(001  Salario base                      220 h         3.000,00) '
+(050  Horas extras 50% \(informadas\)     20 h            0,00) '
+(101  INSS                              9%                           270,00) '
+(102  IRRF                                                            45,00) '
+() '
+(Total de vencimentos: 3.000,00   Total de descontos: 315,00) '
+(Liquido a receber: 2.685,00) '
+() '
+(Observacao: o cartao de ponto registra 20 horas extras no mes,) '
+(mas o valor correspondente nao foi pago neste recibo.) '
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000216 00000 n 
+0000001225 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1351
+%%EOF

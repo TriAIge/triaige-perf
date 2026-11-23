@@ -1,0 +1,6 @@
+# caminho (relativo à raiz do triaige-perf),páginas,peso
+# PDFs sintéticos gerados por gerar_pdfs.py. Peso = participação no sorteio (soma livre).
+caminho,paginas,peso
+dados/pdfs/sintetico-01p.pdf,1,50
+dados/pdfs/sintetico-05p.pdf,5,30
+dados/pdfs/sintetico-10p.pdf,10,20

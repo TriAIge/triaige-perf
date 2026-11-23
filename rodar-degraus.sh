@@ -3,8 +3,14 @@
 # Só API e front: sem finalizar sessões (não chama OCR, Gemini nem e-mail) e
 # 1 sessão por usuário da API (-JnewSessionEachIter=false) para não encher o banco.
 # Divisão: 50% API do escritório, 25% painel admin, 25% portal.
+#
+# LEGADO: mantido só para repetir a bateria de 05/11 e comparar. Os números não vêm do BC e o admin
+# cresce com a carga; para os testes novos use ./rodar-cenario.sh (SPEC-cenarios-bc).
+# Credenciais: TRIAIGE_HOST, TRIAIGE_API_TOKEN e TRIAIGE_SENHA no ambiente ou no .env.
 set -e
 cd "$(dirname "$0")"
+if [ -f .env ]; then set -a; . ./.env; set +a; fi
+: "${TRIAIGE_HOST:?defina TRIAIGE_HOST (veja .env.exemplo)}"
 BASE="resultados/$(date +%Y%m%d-%H%M)-degraus"
 mkdir -p "$BASE"
 echo "$BASE" > .ultimo-degraus
@@ -17,8 +23,8 @@ rodar() { # nome usuarios duracao ramp
   date -u +%Y-%m-%dT%H:%M:%SZ > "$dir/inicio.txt"
   jmeter -n -t triaige-carga-mista.jmx -l "$dir/resultados.jtl" -j "$dir/jmeter.log" \
     -Jjmeter.save.saveservice.output_format=csv -e -o "$dir/relatorio" \
-    -JapiUsers=$api -JadminUsers=$admin -JportalUsers=$portal -JfullFlowUsers=0 \
-    -JnewSessionEachIter=false -Jduration=$dur -Jramp=$ramp > "$dir/console.txt" 2>&1
+    -JapiUsers=$api -JadminUsers=$admin -JportalUsers=$portal -JpipelineCsv="$dir/pipeline.csv" \
+    -Jduration=$dur -Jramp=$ramp < /dev/null > "$dir/console.txt" 2>&1
   date -u +%Y-%m-%dT%H:%M:%SZ > "$dir/fim.txt"
   grep "summary =" "$dir/console.txt" | tail -1
   sleep 30
