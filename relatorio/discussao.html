@@ -1,0 +1,43 @@
+<h3>Efeito das correções no pipeline</h3>
+<p>Na rodada conservadora de 16/11, 12 de 252 casos (4,8%) ficaram sem desfecho. As causas foram: resposta vazia do LLM sem
+tratamento, que gerou <i>NullPointerException</i> (8 casos); relatório reprovado na validação sem nova geração (2); e corrida
+entre a publicação na fila Q2 e o <i>commit</i> da sessão, que levava a mensagem a ser descartada como duplicata (2). Depois das
+correções, a mesma carga, em 18/11, terminou com 251 de 252 casos notificados. As respostas vazias do LLM continuaram ocorrendo
+(6 na rodada), mas todas foram recuperadas por nova tentativa. O único caso não notificado terminou de forma controlada em
+<code>ANALYSIS_FAILED</code>, depois de o relatório ser reprovado também na nova geração. A triagem média caiu de 76,6 s para
+55,9 s e o p95 de 164,1 s para 111,1 s, ambos muito abaixo da meta de 6 min.</p>
+
+<h3>Rajada de 3×</h3>
+<p>Na rajada de 5 min a três vezes a taxa conservadora, a média de triagem (275 s) ficou dentro da meta, mas o p95 (577 s) a
+ultrapassou. Dez casos atingiram o limite de 600 s do teste ainda em processamento, em <code>ANALYZING</code> ou
+<code>ANALYSIS_COMPLETED</code>. Isso indica fila acumulada, e não falha: a rajada forma um estoque que o sistema drena mais
+devagar do que ele se acumula. Não houve throttling do Textract nem do Gemini, nem erros 5xx.</p>
+
+<h3>Escada de estresse e ponto de saturação</h3>
+<p>A 2× da carga conservadora (17 docs/min), o processamento continuou saudável até a análise: foram 301 análises, com média
+de 22,7 s, triagem p95 de 64 s, filas com idade estável e 0,13% de erros HTTP. O primeiro limite a aparecer foi externo: a conta
+Gmail usada para notificação atingiu o limite diário de envio e passou a recusar autenticação, de modo que apenas 7 casos
+chegaram a <code>NOTIFIED</code>. Nessa mesma rodada, a CPU da instância de banco de dados (MySQL, t3.medium) já atingia
+100% em picos.</p>
+<p>A 4× (34 docs/min), o banco de dados ficou em 100% de CPU durante toda a rodada. O tempo de resposta médio no ALB subiu de
+cerca de 0,27 s para cerca de 5 s, 19% das requisições do cliente falharam (a maior parte por tempo limite de conexão) e 201
+documentos não conseguiram sequer criar sessão. As instâncias de aplicação (bff-front e mcp, t3.large) permaneceram abaixo de
+20% de CPU, e os serviços externos não apresentaram throttling. A 8×, o sistema colapsou: 69% de erros, 951 falhas na criação
+de sessão e apenas 92 análises concluídas, porque a maior parte dos documentos não entrou no pipeline.</p>
+<p>O gargalo de capacidade da arquitetura avaliada é, portanto, o banco de dados. A capacidade sustentável fica entre 2× e 4×
+a carga do cenário conservador. As camadas de aplicação, OCR e LLM tinham folga no ponto de saturação.</p>
+
+<h3>Implicações para a arquitetura</h3>
+<p>(i) <b>Banco de dados:</b> é o primeiro componente a escalar, verticalmente (instância maior ou Amazon RDS) ou reduzindo a
+carga de leitura (cache das consultas do portal e do <i>polling</i> de status, réplicas de leitura). (ii) <b>Notificação:</b>
+uma conta de e-mail pessoal tem teto diário fixo (cerca de 500 envios no Gmail comum e cerca de 2.000 no Google Workspace) e
+não acompanha a carga. Em produção recomenda-se um serviço transacional, como o Amazon SES, cujas cotas crescem sob demanda.
+Como o serviço de notificação já usa SMTP, a troca é de configuração. (iii) <b>LLM:</b> respostas vazias e relatórios fora do
+formato ocorrem em cerca de 1–3% das chamadas, independentemente da carga, e precisam de tratamento explícito (nova tentativa
+e nova geração), como mostram os resultados antes e depois das correções.</p>
+
+<h3>Limitações</h3>
+<p>A rodada de plataforma repetida em 18/11 não foi executada por falta de tempo na sessão do laboratório. A análise da
+plataforma usa a rodada de 17/11, cujos degraus de 25% a 75% são válidos. Os degraus de 100% e de pico dessa rodada foram
+afetados pela rede do gerador de carga (p95 no cliente de 7,6 s e 10 s, contra 26–67 ms no ALB). As demais ameaças à validade
+estão na seção de método.</p>

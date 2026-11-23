@@ -1,0 +1,13 @@
+Indicador,16/11 (antes),18/11 (depois)
+Casos,252,252
+Travados,"12 (4,8%)","1 (0,4%)"
+ANALYSIS_FAILED,10,1
+Timeout (preso na fila),2,0
+NullPointerException,8,0
+Q2 descartada como duplicata,2,0
+INVALID_REPORT_FORMAT,2,2
+Duplicata no cache,1,0
+Respostas vazias do LLM (recuperadas),0,6
+Novas gerações do relatório,0,2
+Triagem média (s),"76,6","55,9"
+p95 (s),"164,1","111,1"

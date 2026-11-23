@@ -1,0 +1,9 @@
+Critério,Meta,Medido,Resultado
+Tempo médio de triagem,< 6 min,"275,1 s",✓ OK
+p95 do tempo de triagem,< 6 min,"577,1 s",✗ FALHOU
+Casos sem reprocessamento,> 85%,96.0% (aprox.: retry OCR/relatório),✓ OK
+Casos travados,0,11 de 252,✗ FALHOU
+Sucesso de envio,">= 98,5%",100.0% (NOTIFIED / com desfecho de envio),✓ OK
+Erros 5xx na API,"< 0,1%",0.000% JMeter | 0.000% ALB,✓ OK
+Fila em regime,idade estável,estável,✓ OK
+DLQ,0 novas,0,✓ OK

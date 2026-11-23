@@ -1,0 +1,5 @@
+Cenário,Escritórios,Usuários nomeados,Portal simultâneo,Docs/dia útil,Chegada no pico (docs/min),Docs em processamento (L = λ·W),Polling (req/s)
+Conservador (500 × Essencial),500,1.000,150,2.273,"8,42","42,1","8,4"
+2 × conservador,1.000,2.000,300,4.545,"16,84","84,2","16,8"
+4 × conservador,2.000,4.000,600,9.091,"33,67","168,4","33,7"
+8 × conservador,4.000,8.000,1.200,18.182,"67,34","336,7","67,3"

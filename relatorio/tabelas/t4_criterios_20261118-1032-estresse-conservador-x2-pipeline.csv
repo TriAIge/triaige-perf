@@ -1,0 +1,10 @@
+Critério,Meta,Medido,Resultado
+Tempo médio de triagem,< 6 min,"45,4 s",✓ OK
+p95 do tempo de triagem,< 6 min,"63,6 s",✓ OK
+Casos sem reprocessamento,> 85%,97.0% (aprox.: retry OCR/relatório),✓ OK
+Casos travados,0,329 de 336,✗ FALHOU
+Sucesso de envio,">= 98,5%",100.0% (NOTIFIED / com desfecho de envio),✓ OK
+Erros 5xx na API,"< 0,1%",0.003% JMeter | 0.003% ALB,✓ OK
+Fila em regime,idade estável,estável,✓ OK
+DLQ,0 novas,14,✗ FALHOU
+Throttling Textract/Gemini,0 em regime,Textract 0 | Gemini 429 0,✓ OK
